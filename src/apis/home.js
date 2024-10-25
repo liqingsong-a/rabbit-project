@@ -22,6 +22,17 @@ export const findNewAPI = () => {
   })
 }
 
+//封装人气推荐
 
+/**
+ * @description: 获取人气推荐
+ * @param {*}
+ * @return {*}
+ */
+export const getHotAPI =()=>{
+  return httpInstance({
+    url:'/home/hot'
+  })
+}
 
 
