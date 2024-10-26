@@ -35,4 +35,16 @@ export const getHotAPI =()=>{
   })
 }
 
+//封装商品推荐
+/**
+ * @description: 获取商品推荐
+ * @param {*}
+ * @return {*}
+ */
+export const getGoodsAPI =()=>{
+  return httpInstance({
+    url:'/home/goods'
+  })
+}
+
 
