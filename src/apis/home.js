@@ -1,9 +1,14 @@
 import httpInstance from'@/utils/http'
 
 // 封装banner数据接口
-export function getBannerAPI(){
+export function getBannerAPI(params = {}){
+//默认是1，商品为2：结构赋值一下
+    const {distributionSite = '1'} = params
     return httpInstance({
-        url:'/home/banner'
+        url:'/home/banner',
+        params:{
+          distributionSite
+        }
     })
 
 }
