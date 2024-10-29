@@ -1,4 +1,5 @@
 <script setup>
+//一级分类
 import GoodsItem from '../Home/components/GoodsItem.vue'
 import {useBanner} from'./composables/useBanner'
 import {useCategory} from './composables/usCategory'
@@ -31,7 +32,7 @@ const {categoryData} =useCategory()
   <h3>全部分类</h3>
   <ul>
     <li v-for="i in categoryData.children" :key="i.id">
-      <RouterLink to="/">
+      <RouterLink :to="`/category/sub/${i.id}`">
         <img :src="i.picture" />
         <p>{{ i.name }}</p>
       </RouterLink>
