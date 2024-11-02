@@ -23,7 +23,16 @@ const { elementX,elementY,isOutside} = useMouseInElement(target)
 //2控制滑块跟随鼠标移动（监听elementx和elementy）变化，一旦变化重新设置left/top
 const left = ref(0)
 const top = ref(0)
-watch([elementX,elementY],() =>{
+
+const positionX = ref(0)
+const positionY = ref(0)
+
+watch([elementX,elementY,isOutside],() =>{
+  console.log('xy变化了');
+  // 如果鼠标没有移入刀盒子里面，直接不执行后面的逻辑
+  if(isOutside.value) return
+  console.log('后面逻辑执行了');
+  
     //有效范围内控制滑块距离
     //横向
     if(elementX.value > 100 && elementX.value < 300 ){
@@ -40,6 +49,12 @@ watch([elementX,elementY],() =>{
     // 纵向
     if(elementY.value > 300){top.value = 200}
     if(elementY.value < 100){top.value = 0}
+    //控制大图显示
+    positionX.value = -left.value * 2
+    positionY.value = -top.value * 2
+
+
+
 } )
 
 
@@ -54,7 +69,7 @@ watch([elementX,elementY],() =>{
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div class="layer" v-show="!isOutside" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
@@ -66,10 +81,10 @@ watch([elementX,elementY],() =>{
     <div class="large" :style="[
       {
         backgroundImage: `url(${imageList[0]})`,
-        backgroundPositionX: `0px`,
-        backgroundPositionY: `0px`,
+        backgroundPositionX: `${positionX}px`,
+        backgroundPositionY: `${positionY}px`,
       },
-    ]" v-show="false"></div>
+    ]" v-show="!isOutside"></div>
   </div>
 </template>
 
