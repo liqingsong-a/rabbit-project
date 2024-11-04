@@ -9,12 +9,12 @@ import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
 // 表单校验（账户名+密码）
 const form = ref({
-    account: '',
-    password: '',
+    account: 'xiaotuxian001',
+    password: '123456',
     agree:true,
 })
 
-// 准备规则对象
+//2 准备规则对象
 const rules = {
     account:[
         {required:true,message:'用户名不能为空',trigger:'blur'}
@@ -38,19 +38,19 @@ const rules = {
         }
     ]
 }
-//通过ref过去表单实例
+//3通过ref过去表单实例
 const formRef = ref(null)
 const router = useRouter()
 const doLogin = () =>{
-  const {account,password} = form.value
+  const { account, password } = form.value
     //调用实例方法
     formRef.value.validate(async (valid) => {
         //valid：所用表单校验
-        console.log(valid)
+        // console.log(valid)
         // 以valid作为判断条件 如果通过校验才执行登录逻辑
         if(valid){
             // TODO LOGIN
-           await userStore.getUserInfo({account,password})
+         await userStore.getUserInfo( { account, password })
           // 1,提示用户
           ElMessage({type:'success',message:'登录成功'})
           // 2，跳到首页
