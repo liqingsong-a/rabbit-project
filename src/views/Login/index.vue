@@ -1,5 +1,10 @@
 <script setup>
 import  {ref} from 'vue'
+import {loginAPI} from '@/apis/user'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import { useRouter } from 'vue-router'
+
 
 // 表单校验（账户名+密码）
 const form = ref({
@@ -20,11 +25,11 @@ const rules = {
     agree:[
         {
           validator:(rule,value,callback)  => {
-            console.log(value);
+            // console.log(value);
             //自定义校验逻辑
             // 勾选通过 不勾选不通过
             if(value){
-                callback
+                callback()
             }else{
                 callback(new Error('请勾选协议和服务条款'))
             }
@@ -34,18 +39,23 @@ const rules = {
 }
 //通过ref过去表单实例
 const formRef = ref(null)
+const router = useRouter()
 const doLogin = () =>{
+  const {account,password} = form.value
     //调用实例方法
-    formRef.value.validate(( valid) => {
+    formRef.value.validate(async (valid) => {
         //valid：所用表单校验
-        console.log(valid);
+        console.log(valid)
         // 以valid作为判断条件 如果通过校验才执行登录逻辑
         if(valid){
             // TODO LOGIN
-
+          const res =  await loginAPI({ account, password})
+          console.log(res);
+          // 1,提示用户
+          ElMessage({type:'success',message:'登录成功'})
+          // 2，跳到首页
+          router.replace('/')
         }
-
-       
     })
 }
 // 1,用户名和密码 只需要通过简单的配置（看文档的方式 - 复杂功能通过多个不同的组件拆解
