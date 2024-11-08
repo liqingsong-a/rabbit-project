@@ -12,7 +12,7 @@ import {insertCartAPI, findNewCartListAPI, delCartAPI} from '@/apis/cart'
         // 1,定义state - cartList
          const cartList = ref([])
          //获取最新购物车列表action
-         const undateNewList = async () => {
+         const updateNewList = async () => {
              const res = await findNewCartListAPI() //获取最新购物车列表
              cartList.value = res.result
          }
@@ -22,7 +22,7 @@ import {insertCartAPI, findNewCartListAPI, delCartAPI} from '@/apis/cart'
              if(isLogin.value){
                  //登录之后的的加入购物车逻辑
                  await insertCartAPI({ skuId, count })
-                 undateNewList()
+                 updateNewList()
              }else{
                  //添加购物车
              //1，已添加过 - count+1，
@@ -44,7 +44,7 @@ import {insertCartAPI, findNewCartListAPI, delCartAPI} from '@/apis/cart'
         if(isLogin.value){
             //调用接口实现接口购物车中的删除功能
             await delCartAPI([skuId])
-            undateNewList()
+            updateNewList()
         }else{
             //思路：
         // 1，找到要删除的项的下标值 - splice
@@ -96,7 +96,8 @@ import {insertCartAPI, findNewCartListAPI, delCartAPI} from '@/apis/cart'
         allCheck,
         selectedCount,
         selectedPrice,
-        clearCart
+        clearCart,
+        updateNewList
        
     }
 },{
