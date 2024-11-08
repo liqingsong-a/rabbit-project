@@ -53,7 +53,12 @@ import {insertCartAPI, findNewCartListAPI, delCartAPI} from '@/apis/cart'
         cartList.value.splice(idx,1)
         } 
     }
-    
+
+    // 清除购物车
+    const clearCart = () => {
+        cartList.value = []
+    }
+
     //单选功能
     const singleCheck = (skuId,selected) => {
         //通过skuId找到要修改的那一项 然后把他的selected修改为传过来的selectded
@@ -90,7 +95,8 @@ import {insertCartAPI, findNewCartListAPI, delCartAPI} from '@/apis/cart'
         isAll,
         allCheck,
         selectedCount,
-        selectedPrice
+        selectedPrice,
+        clearCart
        
     }
 },{
